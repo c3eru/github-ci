@@ -23,10 +23,18 @@ tg()
         file)
             curl \
             -F chat_id=$CHANNEL_ID \
-            -d parse_mode=HTML \
+            -F parse_mode=HTML \
             -F disable_web_page_preview=true \
             -F document=@$EXTRA ${URL}/sendDocument \
             -F caption="$CAPTION"
             ;;
     esac
+}
+
+msg() {
+    echo -e "\e[1;32m$*\e[0m"
+}
+
+err() {
+    echo -e "\e[1;41m$*\e[0m"
 }
