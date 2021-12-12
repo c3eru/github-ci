@@ -9,7 +9,7 @@ export telegram_bot_token=$2
 export telegram_personal_id=$3
 export KBUILD_BUILD_USER=greenforce-tesd
 export KBUILD_BUILD_HOST=weekly-build
-branch=$(git rev-parse --abbrev-ref HEAD)
+branch="$(git rev-parse --abbrev-ref HEAD)"
 
 info()
 {
@@ -18,5 +18,15 @@ info()
     toolchain_version=$(cat $(pwd)/out/include/generated/compile.h | grep LINUX_COMPILER | cut -d '"' -f2)
     trigger_sha="$(git rev-parse HEAD)"
     latest_commit="$(git log --pretty=format:'%s' -1)"
-    commit_by=$(git log --pretty=format:'by %an' -1)
+    commit_by="$(git log --pretty=format:'by %an' -1)"
+    commit_template="$(echo ${trigger_sha} | cut -c 1-8) (\"<a href='https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115p/commit/${trigger_sha}'>${latest_commit}</a>\")"
+    caption_template="
+    👤 Owner: yeetnosense & zech4
+    🌿 Branch: $branch
+    🏚️ Linux version: $kernel_version
+    💡 Compiler: $toolchain_version
+    🎁 Top commit: $latest_commit
+    👩‍💻 Commit author: $commit_by
+    🐧 UTS version: $uts_version
+    Build took $build_diff_msg."
 }
