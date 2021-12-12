@@ -31,10 +31,12 @@ tg()
     esac
 }
 
-msg() {
+notif()
+{
     echo -e "\e[1;32m$*\e[0m"
 }
 
-err() {
+err()
+{
     echo -e "\e[1;41m$*\e[0m"
 }
