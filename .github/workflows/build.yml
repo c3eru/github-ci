@@ -45,8 +45,8 @@ jobs:
         make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $build_env vendor/juice-perf_defconfig
         make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $main_env 2>&1| tee build.log
         if ! [[ -f $(pwd)/out/arch/arm64/boot/Image ]] ; then
-            CAPT_TEXT="Build failed bro, build under $branch branch. Pls check the log ASAP!"
-            file $(pwd)/build.log $mid -F caption=$CAPT_TEXT
+            CAPT_TEXT="Build failed bro, build under $branch branch. Pls check the log and fix it ASAP!"
+            file $(pwd)/build.log $mid $CAPT_TEXT
             notif "$CAPT_TEXT"
           exit 1 ;
         else
