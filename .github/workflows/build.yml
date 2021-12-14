@@ -8,14 +8,21 @@ on:
 jobs:
   build:
 
-    runs-on: "mhmmdfdlyas/dockerfile:k"
+    runs-on: "ubuntu-20.04"
 
     steps:
     - uses: actions/checkout@v2
-    - name: Checkout Scripts
+    - name: Setup
       run: |
-        git checkout
-        chmod +x *
+        sudo apt-get update && sudo apt-get install --no-install-recommends -y \
+        bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev make \
+        openssl python ssh tzdata wget zip
+
+    - name: Set build date
+      id: get-date
+      run: |
+        sudo timedatectl set-timezone Etc/GMT-7
+        echo ::set-output name=date::$(/bin/date -u "+%Y%m%d")
 
     - name: Clone dulu ges
       run: |
@@ -61,5 +68,6 @@ jobs:
         cd anykernel-3 && zip -r9 GF-juice-weekly-$(TZ=Asia/Jakarta date +'%H%M-%d%m%y').zip * && cd ..
         tg file $(echo $(pwd)/anykernel-3/*.zip) telegram_personal_id $caption_template
       env:
-        GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
-        GITHUB_USER: ${{ secrets.USERNAME }}
+        cid: ${{ secrets.CHANNEL }}
+        bot: ${{ secrets.TOKEN }}
+        mid: ${{ secrets.ID }}
