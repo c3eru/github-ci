@@ -2,13 +2,13 @@
 # Copyright (C) 2020 Muhammad Fadlyas (fadlyas07)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-URL="https://api.telegram.org/bot${bot}"
+URL="https://api.telegram.org/bot${bot}/"
 file ()
 {
     curl \
     -F "disable_web_page_preview=true" \
     -F "parse_mode=html" \
-    -F document=@$1 $URL/sendDocument \
+    -F document=@$1 $URLsendDocument \
     -F chat_id=$2 \
     -F caption="$(
         for caption in "${3}"; do
