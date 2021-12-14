@@ -1,4 +1,4 @@
-name: Build UwU
+name: Builds
 
 on:
   push:
