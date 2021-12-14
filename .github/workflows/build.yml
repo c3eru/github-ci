@@ -46,13 +46,13 @@ jobs:
         make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $main_env 2>&1| tee build.log
         if ! [[ -f $(pwd)/out/arch/arm64/boot/Image ]] ; then
             CAPT_TEXT="Build failed bro, build under $branch branch. Pls check the log ASAP!"
-            tg file $(pwd)/build.log $telegram_personal_id $CAPT_TEXT
+            file $(pwd)/build.log $mid -F caption=$CAPT_TEXT
             notif "$CAPT_TEXT"
           exit 1 ;
         else
             if [[ -e $(pwd)/out/.config ]] ; then
                 cp $(pwd)/out/.config regen_defconfig
-                tg file regen_defconfig telegram_personal_id
+                file regen_defconfig $mid -F caption=$CAPT_TEXT
             else
                 CAPT_TEXT="Bruh .config not found, cannot regenerate defconfig."
                 notif "$CAPT_TEXT" && msg "$CAPT_TEXT"
@@ -63,10 +63,10 @@ jobs:
         build_diff=$(($build_end - $build_start))
         build_diff_msg="$(($build_diff / 60)) minutes, $(($build_diff % 60)) seconds"
         CAPT_TEXT="Build success after ${build_diff_msg}. Now we will making flashable zip ..."
-        notif "$CAPT_TEXT" && tg file build.log telegram_personal_id $CAPT_TEXT
+        notif "$CAPT_TEXT" && file build.log $mid -F caption=$CAPT_TEXT
         mv $(pwd)/out/arch/arm64/boot/Image $(pwd)/anykernel-3
         cd anykernel-3 && zip -r9 GF-juice-weekly-$(TZ=Asia/Jakarta date +'%H%M-%d%m%y').zip * && cd ..
-        tg file $(echo $(pwd)/anykernel-3/*.zip) telegram_personal_id $caption_template
+        file $(echo $(pwd)/anykernel-3/*.zip) $mid -F caption=$caption_template
       env:
         cid: ${{ secrets.CHANNEL }}
         bot: ${{ secrets.TOKEN }}
