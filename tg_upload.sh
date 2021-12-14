@@ -2,7 +2,7 @@
 # Copyright (C) 2020 Muhammad Fadlyas (fadlyas07)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-URL="https://api.telegram.org/bot${token_bot}/"
+URL="https://api.telegram.org/bot${bot}/"
 file ()
 {
     curl \
