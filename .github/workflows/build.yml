@@ -26,11 +26,11 @@ jobs:
 
     - name: Clone dulu ges
       run: |
-        time git clone -j$(nproc --all) -b rvc-inline https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115 kernel --depth=1 && \
+        git clone -j$(nproc --all) -b rvc-inline https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115 kernel --depth=1 && \
         cd kernel
-        time git clone -j$(nproc --all) --single-branch https://github.com/fadlyas07/anykernel-3 --depth=1 
-        time git clone -j$(nproc --all) --single-branch https://github.com/Inkypen79/arm64-gcc-9.3 --depth=1
-        time git clone -j$(nproc --all) --single-branch https://github.com/ztotherad/arm32-gcc --depth=1
+        git clone -j$(nproc --all) --single-branch https://github.com/fadlyas07/anykernel-3 --depth=1 
+        git clone -j$(nproc --all) --single-branch https://github.com/Inkypen79/arm64-gcc-9.3 --depth=1
+        git clone -j$(nproc --all) --single-branch https://github.com/ztotherad/arm32-gcc --depth=1
 
     - name: Gas Build
       run: |
