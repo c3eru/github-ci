@@ -2,37 +2,45 @@
 # Copyright (C) 2020 Muhammad Fadlyas (fadlyas07)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-URL="https://api.telegram.org/bot${bot}/"
-file ()
+# Function kanged from laststandrighthere's scripts
+tg()
 {
-    curl \
-    -F "disable_web_page_preview=true" \
-    -F "parse_mode=html" \
-    -F document=@$1 $URLsendDocument \
-    -F chat_id=$2 \
-    -F caption="$(
-        for caption in "${3}"; do
-            echo "${caption}"
-        done
-      )"
+    ACTION=$1
+    EXTRA=$2
+    CHANNEL_ID=$3
+    
+    URL="https://api.telegram.org/bot${bot}"
+
+    case "$ACTION" in
+        msg)
+            curl \
+            -d chat_id=$CHANNEL_ID \
+            -d parse_mode=HTML \
+            -d disable_web_page_preview=true \
+            -X POST $URL/sendMessage \
+            -d text="$EXTRA"
+            ;;
+        file)
+            curl \
+            -F chat_id=$CHANNEL_ID \
+            -F "parse_mode=html" \
+            -F "disable_web_page_preview=true" \
+            -F document=@$EXTRA ${URL}/sendDocument \
+            -F caption="$(
+                for caption in "${4}"; do
+                    echo "${caption}"
+                done
+            )"
+            ;;
+    esac
 }
 
-msg ()
-{
-    curl \
-    -d "disable_web_page_preview=true" \
-    -d "parse_mode=html" \
-    -X POST $URL/sendMessage \
-    -d chat_id=$1 \
-    -d text=$2
-}
-
-notif ()
+notif()
 {
     echo -e "\e[1;32m$*\e[0m"
 }
 
-err ()
+err()
 {
     echo -e "\e[1;41m$*\e[0m"
 }
