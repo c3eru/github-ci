@@ -38,7 +38,7 @@ jobs:
         source ../kernel_env.sh
         source ../tg_upload.sh
         bash ../kernel_env.sh $cid $bot $mid
-        msg "Build started ..."
+        notif "Build started ..."
         build_start=$(date +"%s")
         export PATH="$(pwd)/arm64-gcc-9.3/bin:$(pwd)/arm32-gcc/bin:$PATH"
         build_env="ARCH=arm64 CROSS_COMPILE_COMPAT=arm-eabi- CROSS_COMPILE=aarch64-elf-"
