@@ -4,9 +4,6 @@
 
 export ARCH=arm64
 export SUBARCH=$ARCH
-export telegram_channel_id=$1
-export telegram_bot_token=$2
-export telegram_personal_id=$3
 export KBUILD_BUILD_USER=greenforce-tesd
 export KBUILD_BUILD_HOST=weekly-build
 branch="$(git rev-parse --abbrev-ref HEAD)"
