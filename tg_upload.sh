@@ -11,7 +11,7 @@ file ()
     -F document=@$1 $URL/sendDocument \
     -F chat_id=$2 \
     -F caption="$(
-        for caption in "${@}"; do
+        for caption in "${3}"; do
             echo "${caption}"
         done
       )"
