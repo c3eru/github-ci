@@ -26,8 +26,8 @@ jobs:
 
     - name: Clone dulu ges
       run: |
-        time git clone -j$(nproc --all) -b rvc-inline https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115 kernel && \
-        cd kernel && git fetch origin && git reset --hard
+        time git clone -j$(nproc --all) -b rvc-inline https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115 kernel --depth=1 && \
+        cd kernel
         time git clone -j$(nproc --all) --single-branch https://github.com/fadlyas07/anykernel-3 --depth=1 
         time git clone -j$(nproc --all) --single-branch https://github.com/Inkypen79/arm64-gcc-9.3 --depth=1
         time git clone -j$(nproc --all) --single-branch https://github.com/ztotherad/arm32-gcc --depth=1
@@ -46,7 +46,7 @@ jobs:
         make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $main_env 2>&1| tee build.log
         if ! [[ -f $(pwd)/out/arch/arm64/boot/Image ]] ; then
             CAPT_TEXT="Build failed bro, build under $branch branch. Pls check the log and fix it ASAP!"
-            file $(pwd)/build.log $mid $CAPT_TEXT
+            file $(pwd)/build.log $mid "$CAPT_TEXT"
             notif "$CAPT_TEXT"
           exit 1 ;
         else
