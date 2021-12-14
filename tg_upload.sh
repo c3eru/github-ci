@@ -10,7 +10,11 @@ file ()
     -F "parse_mode=html" \
     -F document=@$1 $URL/sendDocument \
     -F chat_id=$2 \
-    -F caption=$3
+    -F caption="$(
+        for caption in "${@}"; do
+            echo "${caption}"
+        done
+      )"
 }
 
 msg ()
