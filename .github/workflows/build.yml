@@ -26,7 +26,7 @@ jobs:
 
     - name: Clone Kernel Stuff
       run: |
-        git clone -j$(nproc --all) -b rvc-inline https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115 kernel --depth=1 && cd kernel
+        git clone -j$(nproc --all) -b 10.0 https://github.com/c3eru/MiDevKernel kernel --depth=1 && cd kernel
         git clone -j$(nproc --all) --single-branch https://github.com/fadlyas07/anykernel-3 --depth=1 
         git clone -j$(nproc --all) --single-branch https://github.com/kdrag0n/proton-clang clang-llvm --depth=1
 
