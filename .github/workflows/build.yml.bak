@@ -26,7 +26,7 @@ jobs:
 
     - name: Clone Kernel Stuff
       run: |
-        git clone -j$(nproc --all) -b 11.0 https://github.com/c3eru/KERNEL_A11 --depth=1 kernel && cd kernel
+        git clone -j$(nproc --all) -b 11.0 https://github.com/c3eru/KERNEL_A11 --depth=1 && cd kernel
         git clone -j$(nproc --all) --single-branch https://github.com/fadlyas07/anykernel-3 --depth=1 
 
     - name: Gas Build
