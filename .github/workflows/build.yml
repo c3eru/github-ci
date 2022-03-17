@@ -16,7 +16,7 @@ jobs:
       run: |
         sudo apt-get update && sudo apt-get install --no-install-recommends -y \
         bc bison ca-certificates curl flex gcc git libc6-dev libssl-dev make \
-        openssl python ssh tzdata wget zip
+        openssl python ssh tzdata wget zip gcc-arm-linux-gnueabi
 
     - name: Set build date
       id: get-date
@@ -26,9 +26,8 @@ jobs:
 
     - name: Clone Kernel Stuff
       run: |
-        git clone -j$(nproc --all) -b main https://github.com/c3eru/android_kernel_xiaomi_bengal kernel --depth=1 && cd kernel
+        git clone -j$(nproc --all) -b 11.0 https://github.com/c3eru/KERNEL_A11 --depth=1 && cd kernel
         git clone -j$(nproc --all) --single-branch https://github.com/fadlyas07/anykernel-3 --depth=1 
-        git clone -j$(nproc --all) --single-branch https://github.com/kdrag0n/proton-clang clang-llvm --depth=1
 
     - name: Gas Build
       run: |
@@ -39,8 +38,8 @@ jobs:
         notif "Build started ..."
         build_start=$(date +"%s")
         export PATH="$(pwd)/clang-llvm/bin:$PATH"
-        build_env="ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu-"
-        make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $build_env vendor/mibengal_defconfig
+        build_env="ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-"
+        make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $build_env vendor/juice-perf_defconfig
         make -j$(nproc --all) -l$(nproc --all) -C $(pwd) O=out $main_env 2>&1| tee build.log
         if ! [[ -f $(pwd)/out/arch/arm64/boot/Image ]] ; then
             CAPT_TEXT="Build failed bro, build under $branch branch. Pls check the log and fix it ASAP!"
