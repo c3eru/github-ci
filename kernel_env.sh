@@ -4,8 +4,8 @@
 
 export ARCH=arm64
 export SUBARCH=$ARCH
-export KBUILD_BUILD_USER=greenforce-tesd
-export KBUILD_BUILD_HOST=weekly-build
+export KBUILD_BUILD_USER=test
+export KBUILD_BUILD_HOST=miui
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
 info()
@@ -16,9 +16,8 @@ info()
     trigger_sha="$(git rev-parse HEAD)"
     latest_commit="$(git log --pretty=format:'%s' -1)"
     commit_by="$(git log --pretty=format:'by %an' -1)"
-    commit_template="$(echo ${trigger_sha} | cut -c 1-8) (\"<a href='https://github.com/greenforce-project/kernel_xiaomi_citrus_sm6115p/commit/${trigger_sha}'>${latest_commit}</a>\")"
     caption_template="
-    👤 Owner: yeetnosense & zech4
+    👤 Owner: mobx
     🌿 Branch: $branch
     🏚️ Linux version: $kernel_version
     💡 Compiler: $toolchain_version
